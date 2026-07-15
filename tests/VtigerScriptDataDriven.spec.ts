@@ -7,9 +7,6 @@ import datafile from "../VtigerData/DataFile.json";
 
 createContact.createNewContact.forEach((data) => {
     test(`Vtiger Create-Contract Script with parameter ${data.firstName}`, async ({page}) => {
-    // let loginPage: LoginPage = new LoginPage(page);
-    // await loginPage.hitURL(createContact.login.baseUrl);
-    // await loginPage.validLogin(createContact.login.username,createContact.login.password);
     let homepage: HomePage = new HomePage(page);
    await homepage.homePageHit();
     await homepage.homepageValidation();
@@ -23,9 +20,6 @@ createContact.createNewContact.forEach((data) => {
 
 //storageState:
  test(`Create-Contract with storageState${datafile.createNewContact[0].firstName}`, async ({page}) => {
-   // let loginPage: LoginPage = new LoginPage(page);
-  //  await loginPage.hitURL(createContact.login.baseUrl);
-   // await loginPage.validLogin(createContact.login.username,createContact.login.password);
     let homepage: HomePage = new HomePage(page);
     await homepage.homePageHit();
     await homepage.homepageValidation();
