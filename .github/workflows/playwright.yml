@@ -33,12 +33,12 @@ jobs:
 
       # Install npm packages
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
 
       # Install Playwright browsers
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx --no-install playwright install --with-deps
 
 
       # Execute Playwright tests
