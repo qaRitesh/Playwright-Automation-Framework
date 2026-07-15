@@ -37,9 +37,9 @@ jobs:
         run: npx --no-install playwright install --with-deps
 
 
-      # Start your application
+          # Start your application
       - name: Start Application Server
-         run: npm run start > app.log 2>&1 &
+        run: npm run start > app.log 2>&1 &
 
 
       # Wait until localhost:8888 is ready
