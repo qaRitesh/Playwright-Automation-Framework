@@ -1,6 +1,6 @@
 
 # Playwright
-nnode_modules/
+node_modules/
 
 test-results/
 playwright-report/
