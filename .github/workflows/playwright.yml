@@ -39,13 +39,12 @@ jobs:
 
       # Start your application
       - name: Start Application Server
-        run: npm run start &
+         run: npm run start > app.log 2>&1 &
 
 
       # Wait until localhost:8888 is ready
       - name: Wait for Application
-        run: npx wait-on http://localhost:8888
-
+        run: npx wait-on http://localhost:8888 --timeout 60000
 
       - name: Run Playwright Tests
         run: npx playwright test
