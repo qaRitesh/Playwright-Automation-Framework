@@ -19,34 +19,38 @@ jobs:
 
     steps:
 
-      # Get project code
       - name: Checkout Code
         uses: actions/checkout@v4
 
 
-      # Install Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
 
-      # Install npm packages
       - name: Install Dependencies
         run: npm ci
 
 
-      # Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx --no-install playwright install --with-deps
 
 
-      # Execute Playwright tests
+      # Start your application
+      - name: Start Application Server
+        run: npm run start &
+
+
+      # Wait until localhost:8888 is ready
+      - name: Wait for Application
+        run: npx wait-on http://localhost:8888
+
+
       - name: Run Playwright Tests
         run: npx playwright test
 
 
-      # Upload Report
       - name: Upload Playwright Report
         if: always()
         uses: actions/upload-artifact@v4
