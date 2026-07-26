@@ -1,7 +1,7 @@
 import { test, Page } from "@playwright/test";
 import { LoginPage } from "../Pages/LoginPage";
 import { HomePage } from "../Pages/HomePage";
-import{ContactCreateInfoPage} from"../Pages/ContactCreateInfoPage";
+import {ContactCreateInfoPage} from"../Pages/ContactCreateInfoPage";
 import createContact from "../VtigerData/ContactsCreateDataDriven.json";
 import datafile from "../VtigerData/DataFile.json";
 
