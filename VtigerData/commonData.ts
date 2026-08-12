@@ -13,10 +13,10 @@ export let commonData = {
     leadSource: "Employee",
     fax: "123-456-7890",
     mobile: "123-456-7890",
-    selectAccoounts:{
+    selectAccounts: {
       url:"http://localhost:8888/index.php?module=Accounts&action=Popup&popuptype=specific_contact_account_address&form=TasksEditView&form_submit=false&fromlink=&recordid=",
-      accountName:"Rohit",
-    }
+        accountName: "Rohit"
+      }
 
   },
 };

@@ -6,10 +6,15 @@ import {commonData} from "../VtigerData/commonData";
 
 
 test('Vtiger Create-Contract Script with parameter', async ({page}) => {
-    let loginPage: LoginPage = new LoginPage(page);
-    await loginPage.hitURL(commonData.login.baseUrl);
-    await loginPage.validLogin(commonData.login.username,commonData.login.password);
+    // let loginPage: LoginPage = new LoginPage(page);
+    // await loginPage.hitURL(commonData.login.baseUrl);
+    // await loginPage.waitForPageLoad();
+    // await loginPage.validLogin(commonData.login.username,commonData.login.password);
+    
     let homepage: HomePage = new HomePage(page);
+    await homepage.waitForPageLoad();
+    await homepage.homePageHit();
+    await homepage.homepageValidation();
     await homepage.clickOnContactLink();
      await homepage.clickonCreateBT();
    let contactCreateInfoPage: ContactCreateInfoPage =  new ContactCreateInfoPage(page);
@@ -20,3 +25,4 @@ test('Vtiger Create-Contract Script with parameter', async ({page}) => {
     })
 
     
+//npx playwright test tests/VtigerScript.spec.ts

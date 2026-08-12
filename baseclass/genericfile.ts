@@ -329,7 +329,9 @@ async openNewPage(locator: Locator): Promise<Page> {
   ): Promise<void> {
     await locator.waitFor({ state: "visible", timeout });
   }
-
+ async waitForPageLoad(): Promise<void> {
+        await this.page.waitForLoadState('load');
+    }
 //========================< Custom/Common Methods >========================<>//common
   async hoverOnTopModule(moduleName: string): Promise<void> {
     let topModuleLocator = this.page.locator(
