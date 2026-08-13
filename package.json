@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright test --reporter=html",
+    "allure:generate": "allure generate allure-results --clean -o playwright-report/allure-report",
+    "allure:open": "allure open playwright-report/allure-report",
+    "allure:report": "npm run allure:generate"
   },
   "keywords": [],
   "author": "",

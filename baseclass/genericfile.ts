@@ -349,6 +349,4 @@ async openNewPage(locator: Locator): Promise<Page> {
   async clickonCreateBT() {
     await this.click(this.createBT);
   }
-
-
 }
