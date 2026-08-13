@@ -4,11 +4,14 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
-    schedule:
-      - cron: '30 18 * * *'   # 12:00 AM IST daily
+
+  schedule:
+    - cron: '30 18 * * *'   # 12:00 AM IST daily
+
   workflow_dispatch:
 
 jobs:
@@ -16,44 +19,84 @@ jobs:
     runs-on: self-hosted
 
     steps:
+
+      # Checkout project
       - name: Checkout Code
         uses: actions/checkout@v4
 
+
+      # Setup Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
-      - name: Setup Java (required for Allure CLI)
+
+      # Setup Java for Allure
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
+
+      # Install npm dependencies
       - name: Install Dependencies
         run: npm ci
 
+
+      # Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx --no-install playwright install --with-deps
 
-      - name: Start Application Server
-        run: npm run start > app.log 2>&1 &
 
+      # Start Application Server
+      - name: Start Application Server
+        shell: powershell
+        run: |
+          Start-Process npm -ArgumentList "run start" `
+            -RedirectStandardOutput "app.log" `
+            -RedirectStandardError "app-error.log"
+
+
+      # Check Application Log
+      - name: Check Application Log
+        shell: powershell
+        run: |
+          Start-Sleep -Seconds 10
+
+          Write-Host "===== APPLICATION LOG ====="
+
+          if (Test-Path app.log) {
+            Get-Content app.log
+          }
+
+          Write-Host "===== APPLICATION ERROR LOG ====="
+
+          if (Test-Path app-error.log) {
+            Get-Content app-error.log
+          }
+
+
+      # Wait for application
       - name: Wait for Application
         run: npx wait-on http://localhost:8888 --timeout 60000
 
-      - name: Show Application Log on Failure
-        if: failure()
-        run: cat app.log
 
+      # Run Playwright tests
       - name: Run Playwright Tests
         run: npx playwright test
 
+
+      # Generate Allure Report
       - name: Generate Allure Report
         if: always()
-        run: npx allure-commandline generate ./allure-results --clean -o ./allure-report
+        run: |
+          npx allure-commandline generate ./allure-results --clean -o ./allure-report
 
+
+      # Upload Playwright HTML Report
       - name: Upload Playwright HTML Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -61,6 +104,8 @@ jobs:
           name: playwright-report
           path: playwright-report/
 
+
+      # Upload Allure Report
       - name: Upload Allure Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -68,9 +113,22 @@ jobs:
           name: allure-report
           path: allure-report/
 
+
+      # Upload Test Results
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: test-results/
+
+
+      # Upload Application Logs
+      - name: Upload Application Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-logs
+          path: |
+            app.log
+            app-error.log
