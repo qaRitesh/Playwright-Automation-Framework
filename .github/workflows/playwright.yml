@@ -10,7 +10,7 @@ on:
       - main
 
   schedule:
-    - cron: '30 18 * * *'   # 12:00 AM IST daily
+    - cron: '30 18 * * 0'   # Monday 12:00 AM IST
 
   workflow_dispatch:
 
